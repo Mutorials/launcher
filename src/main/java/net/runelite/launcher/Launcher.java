@@ -68,11 +68,12 @@ import org.slf4j.LoggerFactory;
 @Slf4j
 public class Launcher
 {
-	private static final File RUNELITE_DIR = new File(System.getProperty("user.home"), ".runelite");
+	private static final File RUNELITE_DIR = new File(System.getProperty("user.home"), ".chunklite");
 	private static final File LOGS_DIR = new File(RUNELITE_DIR, "logs");
 	private static final File REPO_DIR = new File(RUNELITE_DIR, "repository2");
-	private static final String CLIENT_BOOTSTRAP_URL = "https://static.runelite.net/bootstrap.json";
-	private static final String CLIENT_BOOTSTRAP_SHA256_URL = "https://static.runelite.net/bootstrap.json.sha256";
+	private static final String CLIENT_BOOTSTRAP_URL = "https://mutorials.github.io/bootstrap.json";
+	// Removed because I don't know how certificates work :)
+	//private static final String CLIENT_BOOTSTRAP_SHA256_URL = "https://static.runelite.net/bootstrap.json.sha256";
 	private static final LauncherProperties PROPERTIES = new LauncherProperties();
 
 	static final String CLIENT_MAIN_CLASS = "net.runelite.client.RuneLite";
@@ -254,29 +255,31 @@ public class Launcher
 	private static Bootstrap getBootstrap() throws IOException, CertificateException, NoSuchAlgorithmException, InvalidKeyException, SignatureException, VerificationException
 	{
 		URL u = new URL(CLIENT_BOOTSTRAP_URL);
-		URL signatureUrl = new URL(CLIENT_BOOTSTRAP_SHA256_URL);
+		//URL signatureUrl = new URL(CLIENT_BOOTSTRAP_SHA256_URL);
 
 		URLConnection conn = u.openConnection();
-		URLConnection signatureConn = signatureUrl.openConnection();
+		//URLConnection signatureConn = signatureUrl.openConnection();
 
 		conn.setRequestProperty("User-Agent", "Mozilla/5.0");
-		signatureConn.setRequestProperty("User-Agent", "Mozilla/5.0");
+		//signatureConn.setRequestProperty("User-Agent", "Mozilla/5.0");
 
-		try (InputStream i = conn.getInputStream();
-			InputStream signatureIn = signatureConn.getInputStream())
+		try (InputStream i = conn.getInputStream())
+			//InputStream signatureIn = signatureConn.getInputStream())
 		{
 			byte[] bytes = ByteStreams.toByteArray(i);
-			byte[] signature = ByteStreams.toByteArray(signatureIn);
+			//byte[] signature = ByteStreams.toByteArray(signatureIn);
 
 			Certificate certificate = getCertificate();
 			Signature s = Signature.getInstance("SHA256withRSA");
 			s.initVerify(certificate);
 			s.update(bytes);
 
+			/*
 			if (!s.verify(signature))
 			{
 				throw new VerificationException("Unable to verify bootstrap signature");
 			}
+			*/
 
 			Gson g = new Gson();
 			return g.fromJson(new InputStreamReader(new ByteArrayInputStream(bytes)), Bootstrap.class);

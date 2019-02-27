@@ -40,5 +40,5 @@ Name: "{commondesktop}\RuneLite"; Filename: "{app}\RuneLite.exe"; Tasks: Desktop
 Filename: "{app}\RuneLite.exe"; Description: "&Open RuneLite"; Flags: postinstall skipifsilent nowait
 
 [UninstallDelete]
-Type: filesandordirs; Name: "{%USERPROFILE}\.runelite\repository"
-Type: filesandordirs; Name: "{%USERPROFILE}\.runelite\repository2"
+Type: filesandordirs; Name: "{%USERPROFILE}\.chunklite\repository"
+Type: filesandordirs; Name: "{%USERPROFILE}\.chunklite\repository2"
