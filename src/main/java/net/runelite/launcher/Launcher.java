@@ -268,12 +268,12 @@ public class Launcher
 		{
 			byte[] bytes = ByteStreams.toByteArray(i);
 			//byte[] signature = ByteStreams.toByteArray(signatureIn);
-
+			/*
 			Certificate certificate = getCertificate();
 			Signature s = Signature.getInstance("SHA256withRSA");
 			s.initVerify(certificate);
 			s.update(bytes);
-
+			*/
 			/*
 			if (!s.verify(signature))
 			{
